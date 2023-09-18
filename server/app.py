@@ -13,15 +13,13 @@ def print_string(text):
     print(text)
     return text
 
-@app.route('/count/<int:num>')
-def count(num):
-    numbers = '\n'.join(map(str, range(1, num + 1)))
+@app.route('/count/<int:param>')
+def count(param):
+    numbers = '<br>'.join(str(num) for num in range(param))
     return numbers
 
-@app.route('/math/<float:num1>/<string:operation>/<float:num2>')
+@app.route('/math/<int:num1>/<operation>/<int:num2>')
 def math(num1, operation, num2):
-    result = None
-
     if operation == '+':
         result = num1 + num2
     elif operation == '-':
@@ -29,16 +27,12 @@ def math(num1, operation, num2):
     elif operation == '*':
         result = num1 * num2
     elif operation == 'div':
-        if num2 != 0:
-            result = num1 / num2
-        else:
-            return "Division by zero is not allowed."
+        result = num1 / num2
     elif operation == '%':
         result = num1 % num2
     else:
-        return "Invalid operation."
-
-    return f'Result: {num1} {operation} {num2} = {result}'
+        return 'Invalid operation'
+    return str(result)
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run()
